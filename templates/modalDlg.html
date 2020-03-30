@@ -1,0 +1,128 @@
+<style>
+  /*
+   https://stackoverflow.com/questions/25777374/always-show-scrollbar-in-bootstrap-table-responsive
+   */
+
+  .table-responsive::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  .table-responsive::-webkit-scrollbar:vertical {
+    width: 12px;
+  }
+
+  .table-responsive::-webkit-scrollbar:horizontal {
+    height: 12px;
+  }
+
+  .table-responsive::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+  }
+
+  .table-responsive::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #ffffff;
+  }
+
+</style>
+
+<!-- <div ng-app="appMain" ng-controller="modalDlg.controller">
+-->
+<div >
+  <div class="modal-header ">
+    <h3 class="modal-title  " id="modal-title">
+      <span class="glyphicon glyphicon-ok"></span>
+      Select Vehicle Type<small>  </small>
+    </h3>
+  </div>
+
+  <div class="modal-body ">
+    <input
+      class="form-control "
+      id="myInput"
+      type="text"
+      placeholder="Search..."
+      ng-model="txtSearch"
+    />
+
+    <br />
+
+    <!-- remove for main 
+      mygrid-wrapper-div 
+    -->
+    <div
+      class=" mygrid-wrapper-div table-responsive "
+      style="overflow-x:scroll; height: 300px"
+    >
+      <table class=" table table-bordered    ">
+        <thead>
+          <tr>
+            <th><span class="glyphicon glyphicon-ok"></span></th>
+            <th>Make</th>
+            <th>Vehicle Description</th>
+            <th>Year EU / SA</th>
+            <th>Year USA</th>
+            <th>Platform</th>
+          </tr>
+        </thead>
+
+        <tbody id="myTable" class="  ">
+          <tr
+            class="animate-repeat  clickable-row"
+            ng-repeat="item in itemList | filter:txtSearch as results track by item.Id"
+            ng-click="rowClick(item)"
+            ng-class="{'warning': item.Selected}"
+          >
+            <td>
+              <span
+                ng-class="{'glyphicon glyphicon-ok' :item.Selected }"
+              ></span>
+            </td>
+            <td>{{item.Make}}</td>
+            <td>{{item.VehicleDescription}}</td>
+            <td>{{item.YearEU_SA}}</td>
+            <td>{{item.YearUSA}}</td>
+            <td>{{item.PowerbrakePlatformCode}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- --------------------------------  Footer  -->
+  <div class="modal-footer">
+    <div class="form-group">
+      <label class="control-label"> </label>
+      <div class="form-inline ">
+        <button
+          ng-disabled="!rowSelected"
+          ng-click="btnOk_click()"
+          class="btn btn-primary"
+          type="submit"
+          id="btOk"
+        >
+          &nbsp;&nbsp; Ok &nbsp;&nbsp;
+          <span class="glyphicon glyphicon-ok"></span>
+        </button>
+        <button
+          ng-click="btnCancel_click()"
+          class="btn btn-warning"
+          type="submit"
+          id="btview_ClientStoreUnitCancel"
+        >
+          &nbsp;&nbsp; Cancel &nbsp;&nbsp;
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- End Footer -->
+
+  <div uib-alert close="closeError()" class="alert-danger" ng-if="_errorFlag">
+    <strong>Error!</strong> <span ng-bind="_debugMessage"> </span>
+  </div>
+  
+</div>
+

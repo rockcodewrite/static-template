@@ -1,12 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html ng-app="appMain">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Static Template</title>
+    <title>Main</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-touch.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-sanitize.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"
+      type="text/javascript"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-cookies.js"></script>
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.10/split.min.js"
+      type="text/javascript"
+    ></script>
+
+    <script>
+      var _debug = true;
+      var _mock = true;
+      var _version = "0.0.1";
+    </script>
+    <!--
+          //-----------------------------------------------------------------------------------------------------
+          //
+          //  0.1.0 - 
+          //
+          //-----------------------------------------------------------------------------------------------------
+        -->
+    <script>
+      "use strict";
+      var _baseUrl = "";
+
+      if (_debug) {
+        _baseUrl = "http://localhost:2527";
+      }
+      if (_mock) {
+        _baseUrl = "";
+      }
+    </script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        padding: 8px;
+        background-color: #f6f6f6;
+        box-sizing: border-box;
+      }
+    </style>
+    <link href="lib/split.css" rel="stylesheet" />
+    <link href="lib/navbar.css" rel="stylesheet" />
   </head>
-  <body>
-    <h1>This is a static template, there is no bundler or bundling involved!</h1>
+
+  <body ng-controller="MainMenu">
+    <div ng-include="'index.menu.html'"></div>
+
+    <!-- _____________________________ WEST -->
+    <div id="ui-layout-west" class="split content  split-horizontal">
+      <!-- 
+    <div id="e" class="split content"></div>
+    <div id="f" class="split content"></div>
+    --></div>
+
+    <!-- _____________________________ CENTER -->
+    <div id="ui-layout-center" class="split content split-horizontal">
+      <!-- 
+    <div id="c" class="split content"></div>
+    <div id="d" class="split content"></div>
+    --></div>
+
+    <script src="BaseApiController.js"></script>
+    <script>
+      Split(["#ui-layout-west", "#ui-layout-center"], {
+        sizes: [25, 75],
+        gutterSize: 8,
+        cursor: "col-resize",
+        onDragEnd: function() {
+          // Used for uiGrid
+          // window.dispatchEvent(new Event('resize'));
+        }
+      });
+
+      //-------------------- MENU
+      var appMain = angular.module("appMain", [
+        "ngAnimate",
+        "ngRoute",
+        "ngAnimate",
+        "ngSanitize",
+        "ngCookies",
+
+        "ui.bootstrap"
+      ]);
+
+      appMain.controller("MainMenu", function(
+        $scope,
+        $http,
+        $uibModal //modal dialogue
+      ) {
+        $scope.url = "";
+
+        //
+
+        $scope.showDebug = true;
+
+        $scope.companyName = "PB";
+
+        $scope.selectedItem = null;
+
+        
+
+        $scope.btnSubscribe_click = function() {
+          // what do we want to do with this send the file accross so that it can bse
+
+          $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            ariaLabelledBy: "modal-title",
+            ariaDescribedBy: "modal-body",
+            templateUrl: "templates/modalDlg.html",
+            controller: "modalDlg.controller",
+            size: "lg",
+            scope: $scope,
+            resolve: {
+              selectedItem: function() {
+                return $scope.selectedItem;
+              }
+            }
+          });
+
+          $scope.modalInstance.result.then(function(selectedItem) {
+            //debugger;
+          });
+        };
+      });
+    </script>
+    <script src="BaseAPIController.js"></script>
+    <script src="templates/modalDlg.controller.js"></script>
   </body>
 </html>
